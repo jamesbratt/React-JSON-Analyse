@@ -4,8 +4,9 @@ module.exports = {
     entry: './src/JsonAnalyse.js',
     mode: 'production',
     output: {
-        filename: 'index.js',
+        filename: 'react-json-analyse.min.js',
         path: path.resolve(__dirname, 'dist'),
+        library: 'react-json-analyse',
         libraryTarget: 'umd',
     },
     module: {
