@@ -11,10 +11,10 @@ function uuidv4() {
     });
 };
 
-const Analyse = ({json}) => {
+const Analyse = ({json, updateChart}) => {
 
     const [xAxisPath, updateXaxisPath] = useState([]);
-    const [yAxisData, updateYaxisPath] = useState([]);
+    const [yAxisPath, updateYaxisPath] = useState([]);
     const [timeSpan, updateTimespan] = useState("RECURRING");
     const [measure, updateMeasure] = useState("ACTUAL");
     const [range, updateRange] = useState("BY");
@@ -39,14 +39,27 @@ const Analyse = ({json}) => {
     };
 
     const visualise = () => {
-        return {
-            xAxisPath,
-            yAxisData,
-            timeSpan,
-            measure,
-            range,
-            clauses
+        const data = {
+            data: json,
+            config: {
+                xAxisPath,
+                yAxisPath,
+                timeSpan,
+                measure,
+                range,
+                clauses
+            }
         };
+
+        fetch('https://json-analyse-api.herokuapp.com', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        }).then((res) => res.json()).then((j) => {
+            updateChart(j);
+        }).catch(({ message }) => alert(message));
     }
 
     return (
