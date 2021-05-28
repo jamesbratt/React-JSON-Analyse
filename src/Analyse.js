@@ -4,6 +4,8 @@ import WhereClause from './WhereClause';
 
 import { append } from 'ramda';
 
+const API_URL = 'https://json-analyse-api.herokuapp.com';
+
 function uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -51,7 +53,7 @@ const Analyse = ({json, updateChart}) => {
             }
         };
 
-        fetch('https://json-analyse-api.herokuapp.com', {
+        fetch(API_URL, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
