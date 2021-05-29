@@ -65,39 +65,29 @@ const Analyse = ({json, updateChart}) => {
     }
 
     return (
-        <div style={{ width: '75%', minHeight: '50%', padding: '1em' }}>
+        <div>
             <p>Show me the...</p>
-            <div className="form-field">
-               <select onChange={(e) => updateTimespan(e.target.value)}>
-                    <option value="RECURRING">Recurring</option>
-                    <option value="DAILY">Daily</option>
-                    <option value="MONTHLY">Monthly</option>
-                </select> 
-            </div>
-            <div className="form-field">
-               <select onChange={(e) => updateMeasure(e.target.value)}>
-                    <option value="ACTUAL">Actual</option>
-                    <option value="AVERAGE">Average</option>
-                    <option value="TOTAL">Total</option>
-                </select> 
-            </div>
-            <div className="form-field">
-                <JsonAutocomplete data={json} onSelect={updateYaxisPath} />
-            </div>
-            <div className="form-field">
-               <select onChange={(e) => updateRange(e.target.value)}>
-                    <option value="BY">By</option>
-                    <option value="GROUPED_BY">Grouped By</option>
-                </select> 
-            </div>
-            <div className="form-field">
-                <JsonAutocomplete data={json} onSelect={updateXaxisPath} />
-            </div>
+            <select className="form-control" onChange={(e) => updateTimespan(e.target.value)}>
+                <option value="RECURRING">Recurring</option>
+                <option value="DAILY">Daily</option>
+                <option value="MONTHLY">Monthly</option>
+            </select> 
+            <select className="form-control" onChange={(e) => updateMeasure(e.target.value)}>
+                <option value="ACTUAL">Actual</option>
+                <option value="AVERAGE">Average</option>
+                <option value="TOTAL">Total</option>
+            </select> 
+            <JsonAutocomplete data={json} onSelect={updateYaxisPath} />
+            <select className="form-control" onChange={(e) => updateRange(e.target.value)}>
+                <option value="BY">By</option>
+                <option value="GROUPED_BY">Grouped By</option>
+            </select> 
+            <JsonAutocomplete data={json} onSelect={updateXaxisPath} />
             <div className="clauses">
                 <button className="add-clause" onClick={addWhereClause}>Add Clause</button>
                 {clauses.map((config, index) => <WhereClause key={config.id} remove={removeWhereClause} config={config} index={index} json={json} update={updateWhereClause} />)}
             </div>
-            <button className="visualise" onClick={visualise}>Visualize</button>
+            <button className="primary-button" onClick={visualise}>Visualize</button>
         </div>
     )
 };

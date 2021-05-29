@@ -3,6 +3,8 @@ import Analyse from './Analyse';
 import JSONTree from 'react-json-tree';
 import Chart from 'chart.js/auto';
 
+import './css/styles.css';
+
 const style = {
     display: 'flex',
     width: '100%',
@@ -20,6 +22,8 @@ const JsonAnalyse = ({ json }) => {
                 type: 'bar',
                 data: {},
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     scales: {
                         y: {
                             beginAtZero: true
@@ -48,14 +52,14 @@ const JsonAnalyse = ({ json }) => {
     };
 
     return (
-        <div style={style}>
-            <div style={{ width: '50%', height: '100%', padding: '1em' }}>
-                <div style={{ width: '100%', minHeight: '50%', position: 'relative' }}>
-                    <canvas ref={chartRef} width="400" height="200" />
-                </div>
+        <div className="json-analyse">
+            <div className="analyse-wrapper column">
                 <Analyse json={json} updateChart={updateDataset} />
             </div>
-            <div style={{ width: '50%', height: '100%' }}>
+            <div className="data-wrapper column">
+                <div className="chart-wrapper">
+                    <canvas ref={chartRef} />
+                </div>
                 <JSONTree
                     data={json}
                     shouldExpandNode={() => true}

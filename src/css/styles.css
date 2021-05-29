@@ -1,0 +1,42 @@
+html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
+.json-analyse {
+    display: flex;
+}
+
+.column {
+    flex-grow: 1;
+    padding: 1em;
+}
+
+.analyse-wrapper {
+    width: 33.3333%;
+}
+
+.chart-wrapper {
+    height: 400px
+}
+
+.clauses {
+    margin-bottom: 1em;
+}
+
+.clause {
+    margin-top: 1em;
+}
+
+.form-control {
+    width: 100%;
+    height: 40px;
+    padding: 0.5em;
+    margin-bottom: 1em;
+}
+
+.primary-button {
+    padding: 0.5em 1.5em;
+}

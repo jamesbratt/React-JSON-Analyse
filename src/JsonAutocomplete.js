@@ -116,7 +116,7 @@ const JsonAutocomplete = ({ data, onSelect }) => {
     
     return (
         <div className="route-selector" ref={selectorRef}>
-            <input ref={inputRef} value={inputValue} onClick={(e) => getProperties(e.target.value, currentProperty.values)} onChange={(e) => getProperties(e.target.value, currentProperty.values)} type="text" />
+            <input placeholder="Select a data point" className="form-control" ref={inputRef} value={inputValue} onClick={(e) => getProperties(e.target.value, currentProperty.values)} onChange={(e) => getProperties(e.target.value, currentProperty.values)} type="text" />
             {
                 currentProperty && currentProperty.values && availableProperties.length > 0 ?
                 <ul className="properties">
