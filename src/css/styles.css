@@ -22,12 +22,30 @@ html {
     height: 400px
 }
 
+.clause-container {
+    margin-top: 1em;
+}
+
 .clauses {
     margin-bottom: 1em;
 }
 
-.clause {
-    margin-top: 1em;
+.clause-header {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 1em;
+}
+
+.remove-clause {
+    margin-left: auto;
+}
+
+.inline-form-container {
+    display: flex;
+}
+
+.inline-form-container .form-control:first-child {
+    margin-right: 1em;
 }
 
 .form-control {
@@ -35,6 +53,12 @@ html {
     height: 40px;
     padding: 0.5em;
     margin-bottom: 1em;
+}
+
+.form-block {
+    padding: 1em 1em 0 1em;
+    margin-bottom: 1em;
+    background: #f2f2f2;
 }
 
 .primary-button {
