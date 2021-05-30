@@ -120,14 +120,13 @@ const JsonAutocomplete = ({ data, onSelect }) => {
             {
                 currentProperty && currentProperty.values && availableProperties.length > 0 ?
                 <ul className="properties">
-                    {availableProperties.map(property => <li key={property}>
-                        <button onClick={() => filterData(
+                    {availableProperties.map(property => <li key={property}
+                        onClick={() => filterData(
                             currentProperty.values,
                             property,
                             selectedProperties.length - 1
                         )}>
                             {property}
-                        </button>
                     </li>)}
                 </ul> :
                 null

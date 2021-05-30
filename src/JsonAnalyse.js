@@ -66,7 +66,7 @@ const JsonAnalyse = ({ json }) => {
                     theme={{
                         extend: "google",
                         tree: ({ style }) => ({
-                            style: { ...style, padding: "1em", height: '100%', margin: 0 },
+                            style: { ...style, padding: "1em", height: '100%', margin: 0, fontFamily: 'arial' },
                         }),
                     }}
                     invertTheme={true}
