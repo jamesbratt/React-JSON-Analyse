@@ -1,6 +1,6 @@
 {
   "name": "react-json-analyse",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Add JSON data analysis GUI to your React app",
   "main": "dist/react-json-analyse.min.js",
   "files": [
