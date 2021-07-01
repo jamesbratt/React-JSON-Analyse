@@ -25,6 +25,7 @@ const Analyse = ({json, updateChart}) => {
     const addWhereClause = () => {
         updateClauses(append({
             id: uuidv4(),
+            measure: 'ACTUAL',
             leftOperand: null,
             operator: 'EQUAL_TO',
             rightOperand: null
@@ -44,8 +45,8 @@ const Analyse = ({json, updateChart}) => {
         const data = {
             data: json,
             config: {
-                xAxisPath,
-                yAxisPath,
+                categories: xAxisPath,
+                series: yAxisPath,
                 timeSpan,
                 measure,
                 range,
@@ -59,8 +60,14 @@ const Analyse = ({json, updateChart}) => {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
-        }).then((res) => res.json()).then((j) => {
-            updateChart(j);
+        }).then((res) => {
+            return res.json();
+        }).then((j) => {
+            if (!j.error) {
+                updateChart(j);
+            } else {
+                throw Error(j.error)
+            }
         }).catch(({ message }) => alert(message));
     }
 
