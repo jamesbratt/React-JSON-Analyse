@@ -17,5 +17,27 @@ const json = [{
     "page": 1
 }];
 
+const config = {
+    categories: 'items',
+    series: 'items',
+    timeSpan: 'DAILY',
+    measure: 'TOTAL',
+    range: 'GROUPED_BY',
+    clauses: [
+        {
+            lefOperand: 'items',
+            rightOperand: 'items',
+            operator: 'GREATER_THAN',
+            measure: 'TOTAL'
+        },
+        {
+            lefOperand: 'items',
+            rightOperand: 'items',
+            operator: 'LESS_THAN',
+            measure: 'AVERAGE'
+        }
+    ]
+};
+
 var mountNode = document.getElementById("root");
-ReactDOM.render(<JsonAnalyse json={json} />, mountNode);
+ReactDOM.render(<JsonAnalyse json={json} config={config} />, mountNode);

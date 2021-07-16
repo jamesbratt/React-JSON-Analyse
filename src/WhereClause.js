@@ -23,7 +23,7 @@ const WhereClause = ({ config, index, json, update, remove }) => {
         <div className="form-block">
             <div className="clause">
                 <div className="clause-header"><span>Where...</span><button onClick={() => remove(index)} className="remove-clause">Remove Clause</button></div>
-                <select className="form-control" onChange={(e) => updateMeasure(e.target.value)}>
+                <select value={config.measure} className="form-control" onChange={(e) => updateMeasure(e.target.value)}>
                     <option value="ACTUAL">Actual</option>
                     <option value="AVERAGE">Average</option>
                     <option value="TOTAL">Total</option>

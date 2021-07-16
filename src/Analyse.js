@@ -13,14 +13,23 @@ function uuidv4() {
     });
 };
 
-const Analyse = ({json, updateChart}) => {
+const Analyse = ({json, updateChart, config = {}}) => {
 
-    const [xAxisPath, updateXaxisPath] = useState([]);
-    const [yAxisPath, updateYaxisPath] = useState([]);
-    const [timeSpan, updateTimespan] = useState("RECURRING");
-    const [measure, updateMeasure] = useState("ACTUAL");
-    const [range, updateRange] = useState("BY");
-    const [clauses, updateClauses] = useState([]);
+    const {
+        categories: defaultCategories,
+        series: defaultSeries,
+        timeSpan: defaultTimeSpan,
+        measure: defaultMeasure,
+        range: defaultRange,
+        clauses: defaultClauses
+    } = config;
+
+    const [xAxisPath, updateXaxisPath] = useState(defaultCategories || []);
+    const [yAxisPath, updateYaxisPath] = useState(defaultSeries || []);
+    const [timeSpan, updateTimespan] = useState(defaultTimeSpan || "RECURRING");
+    const [measure, updateMeasure] = useState(defaultMeasure || "ACTUAL");
+    const [range, updateRange] = useState(defaultRange || "BY");
+    const [clauses, updateClauses] = useState(defaultClauses || []);
 
     const addWhereClause = () => {
         updateClauses(append({
@@ -76,12 +85,12 @@ const Analyse = ({json, updateChart}) => {
             <p>Show me the...</p>
             <div className="form-block">
                 <div className="inline-form-container">
-                    <select className="form-control" onChange={(e) => updateTimespan(e.target.value)}>
+                    <select value={timeSpan} className="form-control" onChange={(e) => updateTimespan(e.target.value)}>
                         <option value="RECURRING">Recurring</option>
                         <option value="DAILY">Daily</option>
                         <option value="MONTHLY">Monthly</option>
                     </select> 
-                    <select className="form-control" onChange={(e) => updateMeasure(e.target.value)}>
+                    <select value={measure} className="form-control" onChange={(e) => updateMeasure(e.target.value)}>
                         <option value="ACTUAL">Actual</option>
                         <option value="AVERAGE">Average</option>
                         <option value="TOTAL">Total</option>
@@ -90,7 +99,7 @@ const Analyse = ({json, updateChart}) => {
                 <JsonAutocomplete data={json} onSelect={updateYaxisPath} />
             </div>
             <div className="form-block">
-                <select className="form-control" onChange={(e) => updateRange(e.target.value)}>
+                <select value={range} className="form-control" onChange={(e) => updateRange(e.target.value)}>
                     <option value="BY">By</option>
                     <option value="GROUPED_BY">Grouped By</option>
                 </select> 
