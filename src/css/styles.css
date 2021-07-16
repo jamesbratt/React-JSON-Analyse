@@ -1,4 +1,5 @@
 html {
+    font-family: arial;
     box-sizing: border-box;
   }
   *, *:before, *:after {
@@ -79,10 +80,10 @@ button {
     width: 100%;
     list-style: none;
     background-color: #FFFFFF;
-    font-family: arial;
     border: 1px solid;
     border-top: 0;
     z-index: 1;
+    max-height: 300px;
 }
 
 .properties li {
@@ -95,11 +96,13 @@ button {
 }
 
 .form-block {
-    padding: 1em 1em 0 1em;
     margin-bottom: 1em;
-    background: #f2f2f2;
 }
 
 .primary-button {
     padding: 0.5em 1.5em;
+}
+
+.loader {
+    margin-left: 1em;
 }

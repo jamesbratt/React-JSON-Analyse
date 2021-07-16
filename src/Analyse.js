@@ -34,6 +34,7 @@ const Analyse = ({json, updateChart, config = {}}) => {
     const [measure, updateMeasure] = useState(defaultMeasure || "ACTUAL");
     const [range, updateRange] = useState(defaultRange || "BY");
     const [clauses, updateClauses] = useState(defaultClauses || []);
+    const [isLoading, updateLoader] = useState(false);
 
     const addWhereClause = () => {
         updateClauses(append({
@@ -67,10 +68,12 @@ const Analyse = ({json, updateChart, config = {}}) => {
             }
         };
 
+        updateLoader(true);
+
         fetch(API_URL, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
         }).then((res) => {
@@ -81,7 +84,8 @@ const Analyse = ({json, updateChart, config = {}}) => {
             } else {
                 throw Error(j.error)
             }
-        }).catch(({ message }) => alert(message));
+        }).catch(({ message }) => alert(message))
+        .finally(() => updateLoader(false));
     }
 
     return (
@@ -115,7 +119,8 @@ const Analyse = ({json, updateChart, config = {}}) => {
                     {clauses.map((clause, index) => <WhereClause key={clause.id} remove={removeWhereClause} config={clause} index={index} json={json} update={updateWhereClause} />)}
                 </div>
             </div>
-            <button className="primary-button" onClick={visualise}>Visualize</button>
+            <button disabled={isLoading} className="primary-button" onClick={visualise}>Visualize</button>
+            {isLoading ? <span className="loader">Processing data...</span> : null}
         </div>
     )
 };
