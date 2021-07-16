@@ -3,9 +3,9 @@ import Analyse from './Analyse';
 
 import './css/styles.css';
 
-const JsonAnalyse = ({ json, onSubmit }) => {
+const JsonAnalyse = ({ json, onSubmit, config }) => {
     return (
-        <Analyse json={json} updateChart={onSubmit} />
+        <Analyse json={json} updateChart={onSubmit} config={config} />
     )
 }
 

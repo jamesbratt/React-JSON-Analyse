@@ -23,12 +23,12 @@ const WhereClause = ({ config, index, json, update, remove }) => {
         <div className="form-block">
             <div className="clause">
                 <div className="clause-header"><span>Where...</span><button onClick={() => remove(index)} className="remove-clause">Remove Clause</button></div>
-                <select className="form-control" onChange={(e) => updateMeasure(e.target.value)}>
+                <select value={config.measure} className="form-control" onChange={(e) => updateMeasure(e.target.value)}>
                     <option value="ACTUAL">Actual</option>
                     <option value="AVERAGE">Average</option>
                     <option value="TOTAL">Total</option>
                 </select>
-                <JsonAutocomplete data={json} onSelect={updateLeftOperand} />
+                <JsonAutocomplete data={json} onSelect={updateLeftOperand} defaultPath={config.leftOperand} />
                 <select className="form-control" value={config.operator} onChange={(e) => updateOperator(e.target.value)}>
                     <option value="EQUAL_TO">Is Equal To</option>
                     <option value="NOT_EQUAL_TO">Is not Equal To</option>
@@ -37,7 +37,7 @@ const WhereClause = ({ config, index, json, update, remove }) => {
                     <option value="GREATER_THAN_EQUAL_TO">Is greater Than Or Equal To</option>
                     <option value="LESS_THAN_EQUAL_TO">Is Less Than Or Equal To</option>
                 </select> 
-                <JsonAutocomplete data={json} onSelect={updateRightOperand} />
+                <JsonAutocomplete data={json} onSelect={updateRightOperand} defaultPath={config.rightOperand} />
             </div>
         </div>
     )

@@ -17,5 +17,22 @@ const json = [{
     "page": 1
 }];
 
+const config = {
+    categories: 'items.date.month',
+    series: 'items.distance',
+    timeSpan: 'RECURRING',
+    measure: 'ACTUAL',
+    range: 'BY',
+    clauses: [
+        {
+            leftOperand: 'items.distance',
+            rightOperand: 'items.target',
+            operator: 'GREATER_THAN',
+            measure: 'TOTAL',
+            id: 1
+        }
+    ]
+};
+
 var mountNode = document.getElementById("root");
-ReactDOM.render(<JsonAnalyse json={json} />, mountNode);
+ReactDOM.render(<JsonAnalyse json={json} onSubmit={() => {}} config={config} />, mountNode);

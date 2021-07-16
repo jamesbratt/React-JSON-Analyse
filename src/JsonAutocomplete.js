@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import useDocumentClick from './useDocumentClick';
 
-const JsonAutocomplete = ({ data, onSelect }) => {
+const JsonAutocomplete = ({ data, onSelect, defaultPath = "" }) => {
 
     const inputRef = useRef(null);
     const selectorRef = useRef(null);
@@ -9,6 +9,7 @@ const JsonAutocomplete = ({ data, onSelect }) => {
     const [ selectedProperties, updateProperties ] = useState([{ selectedKey: null, values: data }]);
     const [ availableProperties, updateAvailableProperties ] = useState([]);
     const [ inputValue, updateInputValue ] = useState("");
+    const [ defaultPathArr, defaultPathArrUpdate ] = useState((defaultPath && typeof defaultPath === 'string') ? defaultPath.split('.') : []);
 
     useDocumentClick(selectorRef, () => {
         updateAvailableProperties([])
@@ -22,6 +23,17 @@ const JsonAutocomplete = ({ data, onSelect }) => {
         updateInputValue(inputValue);
         onSelect(inputValue)
         
+    }, [selectedProperties]);
+
+    useEffect(() => {
+        if (defaultPathArr.length > 0) {
+            const prop = defaultPathArr[0];
+            const updatedDefaultPath = defaultPathArr.filter(dpa => dpa !== prop);
+            defaultPathArrUpdate(updatedDefaultPath);
+
+            const currentProperty =  selectedProperties[selectedProperties.length - 1];
+            filterData(currentProperty.values, prop, selectedProperties.length - 1);
+        }
     }, [selectedProperties]);
 
     /**

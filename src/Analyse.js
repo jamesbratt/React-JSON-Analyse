@@ -13,22 +13,36 @@ function uuidv4() {
     });
 };
 
-const Analyse = ({json, updateChart}) => {
+const Analyse = ({json, updateChart, config = {}}) => {
 
-    const [xAxisPath, updateXaxisPath] = useState([]);
-    const [yAxisPath, updateYaxisPath] = useState([]);
-    const [timeSpan, updateTimespan] = useState("RECURRING");
-    const [measure, updateMeasure] = useState("ACTUAL");
-    const [range, updateRange] = useState("BY");
-    const [clauses, updateClauses] = useState([]);
+    if (typeof config !== 'object' || Array.isArray(config)) {
+        throw Error('The provided configuration is invalid.')
+    }
+
+    const {
+        categories: defaultCategories,
+        series: defaultSeries,
+        timeSpan: defaultTimeSpan,
+        measure: defaultMeasure,
+        range: defaultRange,
+        clauses: defaultClauses
+    } = config || {};
+
+    const [xAxisPath, updateXaxisPath] = useState(defaultCategories || '');
+    const [yAxisPath, updateYaxisPath] = useState(defaultSeries || '');
+    const [timeSpan, updateTimespan] = useState(defaultTimeSpan || "RECURRING");
+    const [measure, updateMeasure] = useState(defaultMeasure || "ACTUAL");
+    const [range, updateRange] = useState(defaultRange || "BY");
+    const [clauses, updateClauses] = useState(defaultClauses || []);
+    const [isLoading, updateLoader] = useState(false);
 
     const addWhereClause = () => {
         updateClauses(append({
             id: uuidv4(),
             measure: 'ACTUAL',
-            leftOperand: null,
+            leftOperand: '',
             operator: 'EQUAL_TO',
-            rightOperand: null
+            rightOperand: ''
         }, clauses));
     };
 
@@ -54,10 +68,12 @@ const Analyse = ({json, updateChart}) => {
             }
         };
 
+        updateLoader(true);
+
         fetch(API_URL, {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
         }).then((res) => {
@@ -68,7 +84,8 @@ const Analyse = ({json, updateChart}) => {
             } else {
                 throw Error(j.error)
             }
-        }).catch(({ message }) => alert(message));
+        }).catch(({ message }) => alert(message))
+        .finally(() => updateLoader(false));
     }
 
     return (
@@ -76,33 +93,34 @@ const Analyse = ({json, updateChart}) => {
             <p>Show me the...</p>
             <div className="form-block">
                 <div className="inline-form-container">
-                    <select className="form-control" onChange={(e) => updateTimespan(e.target.value)}>
+                    <select value={timeSpan} className="form-control" onChange={(e) => updateTimespan(e.target.value)}>
                         <option value="RECURRING">Recurring</option>
                         <option value="DAILY">Daily</option>
                         <option value="MONTHLY">Monthly</option>
                     </select> 
-                    <select className="form-control" onChange={(e) => updateMeasure(e.target.value)}>
+                    <select value={measure} className="form-control" onChange={(e) => updateMeasure(e.target.value)}>
                         <option value="ACTUAL">Actual</option>
                         <option value="AVERAGE">Average</option>
                         <option value="TOTAL">Total</option>
                     </select>
                 </div>
-                <JsonAutocomplete data={json} onSelect={updateYaxisPath} />
+                <JsonAutocomplete data={json} onSelect={updateYaxisPath} defaultPath={yAxisPath} />
             </div>
             <div className="form-block">
-                <select className="form-control" onChange={(e) => updateRange(e.target.value)}>
+                <select value={range} className="form-control" onChange={(e) => updateRange(e.target.value)}>
                     <option value="BY">By</option>
                     <option value="GROUPED_BY">Grouped By</option>
                 </select> 
-                <JsonAutocomplete data={json} onSelect={updateXaxisPath} />
+                <JsonAutocomplete data={json} onSelect={updateXaxisPath} defaultPath={xAxisPath} />
             </div>
             <div className="clauses">
                 <button className="add-clause" onClick={addWhereClause}>Add Clause</button>
                 <div className="clause-container">
-                    {clauses.map((config, index) => <WhereClause key={config.id} remove={removeWhereClause} config={config} index={index} json={json} update={updateWhereClause} />)}
+                    {clauses.map((clause, index) => <WhereClause key={clause.id} remove={removeWhereClause} config={clause} index={index} json={json} update={updateWhereClause} />)}
                 </div>
             </div>
-            <button className="primary-button" onClick={visualise}>Visualize</button>
+            <button disabled={isLoading} className="primary-button" onClick={visualise}>Visualize</button>
+            {isLoading ? <span className="loader">Processing data...</span> : null}
         </div>
     )
 };
