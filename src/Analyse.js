@@ -15,6 +15,10 @@ function uuidv4() {
 
 const Analyse = ({json, updateChart, config = {}}) => {
 
+    if (typeof config !== 'object' || Array.isArray(config)) {
+        throw Error('The provided configuration is invalid.')
+    }
+
     const {
         categories: defaultCategories,
         series: defaultSeries,
@@ -22,10 +26,10 @@ const Analyse = ({json, updateChart, config = {}}) => {
         measure: defaultMeasure,
         range: defaultRange,
         clauses: defaultClauses
-    } = config;
+    } = config || {};
 
-    const [xAxisPath, updateXaxisPath] = useState(defaultCategories || []);
-    const [yAxisPath, updateYaxisPath] = useState(defaultSeries || []);
+    const [xAxisPath, updateXaxisPath] = useState(defaultCategories || '');
+    const [yAxisPath, updateYaxisPath] = useState(defaultSeries || '');
     const [timeSpan, updateTimespan] = useState(defaultTimeSpan || "RECURRING");
     const [measure, updateMeasure] = useState(defaultMeasure || "ACTUAL");
     const [range, updateRange] = useState(defaultRange || "BY");
@@ -35,9 +39,9 @@ const Analyse = ({json, updateChart, config = {}}) => {
         updateClauses(append({
             id: uuidv4(),
             measure: 'ACTUAL',
-            leftOperand: null,
+            leftOperand: '',
             operator: 'EQUAL_TO',
-            rightOperand: null
+            rightOperand: ''
         }, clauses));
     };
 
@@ -108,7 +112,7 @@ const Analyse = ({json, updateChart, config = {}}) => {
             <div className="clauses">
                 <button className="add-clause" onClick={addWhereClause}>Add Clause</button>
                 <div className="clause-container">
-                    {clauses.map((config, index) => <WhereClause key={config.id} remove={removeWhereClause} config={config} index={index} json={json} update={updateWhereClause} />)}
+                    {clauses.map((clause, index) => <WhereClause key={clause.id} remove={removeWhereClause} config={clause} index={index} json={json} update={updateWhereClause} />)}
                 </div>
             </div>
             <button className="primary-button" onClick={visualise}>Visualize</button>

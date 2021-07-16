@@ -9,7 +9,7 @@ const JsonAutocomplete = ({ data, onSelect, defaultPath = "" }) => {
     const [ selectedProperties, updateProperties ] = useState([{ selectedKey: null, values: data }]);
     const [ availableProperties, updateAvailableProperties ] = useState([]);
     const [ inputValue, updateInputValue ] = useState("");
-    const [ defaultPathArr, defaultPathArrUpdate ] = useState(defaultPath.split('.'));
+    const [ defaultPathArr, defaultPathArrUpdate ] = useState((defaultPath && typeof defaultPath === 'string') ? defaultPath.split('.') : []);
 
     useDocumentClick(selectorRef, () => {
         updateAvailableProperties([])

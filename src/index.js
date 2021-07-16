@@ -22,7 +22,16 @@ const config = {
     series: 'items.distance',
     timeSpan: 'RECURRING',
     measure: 'ACTUAL',
-    range: 'BY'
+    range: 'BY',
+    clauses: [
+        {
+            leftOperand: 'items.distance',
+            rightOperand: 'items.target',
+            operator: 'GREATER_THAN',
+            measure: 'TOTAL',
+            id: 1
+        }
+    ]
 };
 
 var mountNode = document.getElementById("root");
