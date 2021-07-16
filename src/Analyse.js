@@ -96,14 +96,14 @@ const Analyse = ({json, updateChart, config = {}}) => {
                         <option value="TOTAL">Total</option>
                     </select>
                 </div>
-                <JsonAutocomplete data={json} onSelect={updateYaxisPath} />
+                <JsonAutocomplete data={json} onSelect={updateYaxisPath} defaultPath={yAxisPath} />
             </div>
             <div className="form-block">
                 <select value={range} className="form-control" onChange={(e) => updateRange(e.target.value)}>
                     <option value="BY">By</option>
                     <option value="GROUPED_BY">Grouped By</option>
                 </select> 
-                <JsonAutocomplete data={json} onSelect={updateXaxisPath} />
+                <JsonAutocomplete data={json} onSelect={updateXaxisPath} defaultPath={xAxisPath} />
             </div>
             <div className="clauses">
                 <button className="add-clause" onClick={addWhereClause}>Add Clause</button>

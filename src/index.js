@@ -18,26 +18,12 @@ const json = [{
 }];
 
 const config = {
-    categories: 'items',
-    series: 'items',
-    timeSpan: 'DAILY',
-    measure: 'TOTAL',
-    range: 'GROUPED_BY',
-    clauses: [
-        {
-            lefOperand: 'items',
-            rightOperand: 'items',
-            operator: 'GREATER_THAN',
-            measure: 'TOTAL'
-        },
-        {
-            lefOperand: 'items',
-            rightOperand: 'items',
-            operator: 'LESS_THAN',
-            measure: 'AVERAGE'
-        }
-    ]
+    categories: 'items.date.month',
+    series: 'items.distance',
+    timeSpan: 'RECURRING',
+    measure: 'ACTUAL',
+    range: 'BY'
 };
 
 var mountNode = document.getElementById("root");
-ReactDOM.render(<JsonAnalyse json={json} config={config} />, mountNode);
+ReactDOM.render(<JsonAnalyse json={json} onSubmit={() => {}} config={config} />, mountNode);
